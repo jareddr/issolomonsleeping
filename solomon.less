@@ -1,0 +1,47 @@
+@sleep: rgb(44,44,97);
+@wake: #70c768;
+
+html,body,div{
+	border:0px;
+	padding:0px;
+	margin:0px;
+	font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+}
+body,html{
+	overflow:hidden;
+}
+
+
+a {
+	color:white;
+	border:1px solid white;
+	text-decoration: none;
+	padding:15px;
+}
+
+div.main{
+	font-size:2em;
+	padding-top:50px;
+	height:100vh;
+	&.sleep{
+		background-color: @sleep;
+		color:white;
+		a:hover{
+			background-color: @wake;
+		}
+	}
+
+	&.wake{
+		background-color: @wake;
+		color:white;
+		a:hover{
+			background-color: @sleep;
+		}
+	}
+}
+div.content{
+	padding:0px;
+	width:400px;
+	margin:auto;
+	text-align: center;
+}

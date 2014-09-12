@@ -1,0 +1,25 @@
+<head>
+  <title>Is Solomon Sleeping?</title>
+  <meta name="viewport" content="initial-scale=0.75, maximum-scale=0.75">
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+<template name="main">
+  <div class='main {{state}}'>
+  	<div class='content'>
+  		Solomon is {{#if asleep}}sleeping{{else}}awake{{/if}}, 
+  		<br/>
+  		and has been for 
+  		<br/>
+  		{{time}}.
+  		<br />
+  		<br />
+  		<br />
+  		<br />
+  		<a rel="{{state}}" href="#">He just {{#if asleep}}woke up{{else}}fell asleep{{/if}}.</a>
+  </div>
+  </div>
+</template>

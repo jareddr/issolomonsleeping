@@ -1,0 +1,1 @@
+Sleep = new Meteor.Collection("sleep")
