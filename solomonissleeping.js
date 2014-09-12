@@ -86,6 +86,14 @@ if (Meteor.isServer) {
   Meteor.publish("sleep", function(){
     return Sleep.find({})
   })
+
+  Metoer.publish("summary", function(year, month, day){
+    return Sleep.find({sleep: {
+        $gte: new Date(year + "-" + month + "-" + day + "T07:00:00.000Z"),
+        $lt: new Date(year + "-" + month + "-" + day+1 + "T07:00:00.000Z"),    
+      }})
+  })
+
   Meteor.methods({
     sleep: function () {
       id = Sleep.insert({sleep: new Date(), woke: null})
