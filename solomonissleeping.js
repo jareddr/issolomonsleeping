@@ -1,6 +1,7 @@
 if (Meteor.isClient) {
   var timer = new Deps.Dependency();
   var timerInterval
+  var sleepSubscription = Meteor.subscribe("sleep")
 
   function updateTime(){
     timer.changed()
@@ -23,6 +24,10 @@ if (Meteor.isClient) {
         return false
       }
   };
+
+  Template.main.ready = function() {
+    return sleepSubscription.ready()
+  }
 
   Template.main.created = function(){
     timerInterval = Meteor.setInterval(updateTime, 1000);
@@ -77,6 +82,10 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+
+  Meteor.publish("sleep", function(){
+    return Sleep.find({})
+  })
   Meteor.methods({
     sleep: function () {
       id = Sleep.insert({sleep: new Date(), woke: null})

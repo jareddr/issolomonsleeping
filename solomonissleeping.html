@@ -13,18 +13,19 @@
 </body>
 
 <template name="main">
-  <div class='main {{state}}'>
+  <div class='main {{#if ready}}{{state}}{{/if}}'>
   	<div class='content'>
-  		Solomon is {{#if asleep}}sleeping{{else}}awake{{/if}}, 
-  		<br/>
-  		and has been for 
-  		<br/>
-  		{{time}}.
-  		<br />
-  		<br />
-  		<br />
-  		<br />
-  		<a rel="{{state}}" href="#">He just {{#if asleep}}woke up{{else}}fell asleep{{/if}}.</a>
+  	{{#if ready}}
+  		<div class='message'>
+	  		Solomon is {{#if asleep}}sleeping{{else}}awake{{/if}}, 
+	  		and has been for {{time}}.
+	  	</div>
+  		<div class='action'>
+  			<a rel="{{state}}" href="#">He just {{#if asleep}}woke up{{else}}fell asleep{{/if}}.</a>
+  		</div>
+	{{else}}
+		<img src="loading.gif">
+	{{/if}}
   </div>
   </div>
 </template>
