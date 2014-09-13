@@ -9,13 +9,14 @@
 </head>
 
 <body>
-  {{> main}}
 </body>
 
-<template name="main">
-  <div class='main {{#if ready}}{{state}}{{/if}}'>
+<template name="header">
+</template>
+
+<template name="track">
+  <div class='main {{state}}'>
   	<div class='content'>
-  	{{#if ready}}
   		<div class='message'>
 	  		Solomon is {{#if asleep}}sleeping{{else}}awake{{/if}}, 
 	  		and has been for {{time}}.
@@ -23,9 +24,40 @@
   		<div class='action'>
   			<a rel="{{state}}" href="#">He just {{#if asleep}}woke up{{else}}fell asleep{{/if}}.</a>
   		</div>
-	{{else}}
-		<img src="loading.gif">
-	{{/if}}
+  	</div>
   </div>
-  </div>
+</template>
+
+<template name="summary">
+	<div class='summary'>
+		<div class='date'>
+			<div class='data'>
+				{{summary.date}}
+			</div>
+		</div>
+		<div class='naps'>
+			<div class='data'>
+				Solomon napped {{summary.napCount}} times for a total of {{summary.napTotal}}.
+				<ul>
+				{{#each summary.naps}}
+					<li>Starting at {{start}} for {{duration}}</li>
+				{{/each}}
+				</ul>
+			</div>
+		</div>
+		<div class='sleep'>
+			<div class='data'>
+				Solomon slept {{summary.sleepCount}} times for a total of {{summary.sleepTotal}}.
+				<ul>
+				{{#each summary.sleeps}}
+					<li>{{start}} for {{duration}}</li>
+				{{/each}}
+				</ul>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="loading">
+	<img src="loading.gif">
 </template>

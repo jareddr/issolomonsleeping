@@ -1,11 +1,12 @@
-@sleep: rgb(44,44,97);
-@wake: #70c768;
+@sleep: #435a6b;
+@wake: #3fa46a;
 
 html,body,div{
 	border:0px;
 	padding:0px;
 	margin:0px;
 	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+	color:white;
 }
 body,html{
 	overflow:hidden;
@@ -27,7 +28,6 @@ div.main{
 	height:100vh;
 	&.sleep{
 		background-color: @sleep;
-		color:white;
 		a:hover{
 			//background-color: @wake;
 		}
@@ -35,11 +35,46 @@ div.main{
 
 	&.wake{
 		background-color: @wake;
-		color:white;
 		a:hover{
 			//background-color: @sleep;
 		}
 	}
+}
+
+div.summary{
+	font-size:2em;
+	height:100vh;
+	background-color:@sleep;
+	ul{
+		list-style: none;
+		text-indent: 0;
+		padding:0;
+		font-size: 0.6em;
+		text-align: left;
+		padding-left:40px;
+	}
+}
+div.date{
+	background-color:#0e83cd;
+	text-transform: uppercase;
+}
+div.data{
+	padding:0px;
+	width:400px;
+	margin:auto;
+	text-align: center;	
+	padding:20px;
+
+}
+
+div.naps{
+	background-color: @wake;
+	min-height:50px;
+}
+
+div.sleep{
+	background-color: @sleep;
+	min-height:50px;
 }
 
 div.message{
