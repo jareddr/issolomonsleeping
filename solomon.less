@@ -8,10 +8,6 @@ html,body,div{
 	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
 	color:white;
 }
-body,html{
-	overflow:hidden;
-}
-
 
 a {
 	color:white;
@@ -24,7 +20,6 @@ a {
 
 div.main{
 	font-size:2em;
-	padding-top:50px;
 	height:100vh;
 	&.sleep{
 		background-color: @sleep;
@@ -39,6 +34,20 @@ div.main{
 			//background-color: @sleep;
 		}
 	}
+}
+
+div.head{
+	background-color: rgb(242,242,242);
+	color: #89867e;
+	text-align:right;
+	height:42px;
+	padding-top:10px;
+	font-size:0.8em;
+	a{ border-color:#89867e; margin-right:5px; color: #89867e; padding:5px; padding-left:10px; padding-right:10px;}
+}
+
+div.message{
+	padding-top:15px;
 }
 
 div.summary{
@@ -57,12 +66,25 @@ div.summary{
 div.date{
 	background-color:#0e83cd;
 	text-transform: uppercase;
+	font-size: 0.7em;
+	height:40px;
+	padding-top:10px;
+	a{
+		border:none;
+		display:inline-block;
+		margin-top:-12px;
+	}
+	span{
+		display:block;
+	}
+	.data{
+		padding:0px;
+	}
 }
 div.data{
-	padding:0px;
 	width:400px;
 	margin:auto;
-	text-align: center;	
+	text-align: left;	
 	padding:20px;
 
 }
@@ -75,6 +97,10 @@ div.naps{
 div.sleep{
 	background-color: @sleep;
 	min-height:50px;
+}
+
+div.raw{
+	background-color: #cd4436;
 }
 
 div.message{
@@ -92,4 +118,13 @@ div.content{
 	margin:auto;
 	text-align: center;
 	height: 100vh;
+}
+
+div.loading{
+	width:400px;
+	text-align: center;
+	font-size: 2em;
+	margin:auto;
+	color:black;
+	margin-top:100px;
 }

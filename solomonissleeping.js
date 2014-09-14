@@ -34,18 +34,10 @@ if (Meteor.isClient) {
   Template.summary.summary = function () {
     var napTimes = []
     var sleepTimes = []
+    var raw = []
     var napTotal=0, sleepTotal = 0
     var napCount=0, sleepCount = 0
-    var summaryDate = "Today"
-    var dayLookup = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    var monthLookup = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    var endingLookup = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th", "th", "th", "th", "th", "th", "th", "th", "th", "th", "th", "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th", "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th", "th"]
-
-    if(this.day && this.month && this.year){
-      var d = new Date(this.year + "-" + this.month + "-" + this.day + "T07:00:00.000Z")
-      summaryDate = dayLookup[d.getDay()] + ",  " + monthLookup[d.getMonth()] + " " + d.getDate() + endingLookup[d.getDate()] 
-    }
-    
+    var summaryDate = this.date.format("dddd, MMM Do YYYY")
 
     this.sleeps.forEach(function (sleep) {
       if(sleep.sleep && sleep.woke){
@@ -56,7 +48,13 @@ if (Meteor.isClient) {
         var ampm = start.getHours() > 12 ? "pm" : "am"
         var diff = end - start;
         
-        var sleepData = {start: hours + ":" + minutes + " " + ampm, duration: timeDiff(sleep.sleep, sleep.woke)}
+        var sleepData = {start: hours + ":" + minutes + "" + ampm, duration: timeDiff(sleep.sleep, sleep.woke)}
+
+        raw.push({id: sleep._id, start: moment(sleep.sleep).format('M/D h:mm:ss a'), duration: timeDiff(sleep.sleep, sleep.woke)})
+
+        if(diff<1000*60*10){
+          return
+        }
         
         if(start.getHours() >= 7  && start.getHours() < 19){
           napTimes.push(sleepData);
@@ -70,7 +68,7 @@ if (Meteor.isClient) {
         }
       }
     });
-    return {date: summaryDate, naps: napTimes, napCount: napCount, napTotal: timeDiff(0,napTotal), sleeps: sleepTimes, sleepCount: sleepCount, sleepTotal: timeDiff(0,sleepTotal)};
+    return {raw:raw,date: summaryDate, naps: napTimes, napCount: napCount, napTotal: timeDiff(0,napTotal), sleeps: sleepTimes, sleepCount: sleepCount, sleepTotal: timeDiff(0,sleepTotal)};
   }
 
   Template.track.state = function () {
@@ -149,27 +147,11 @@ if (Meteor.isServer) {
     return Sleep.find({})
   })
 
-  Meteor.publish("summary", function(d){
-    if(!d.year || !d.month || !d.day){
-      var now = new Date()
-      d = {}
-      d.year = now.getFullYear()
-      d.month = now.getMonth()+1
-      d.day = now.getDate()
-    }
-    d.day2 = parseInt(d.day) + 1;
-    if(d.month < 10){
-      d.month = "0"+d.month
-    }
-    if(d.day < 10){
-      d.day = "0"+d.day
-    }
-    if(d.day2 < 10){
-      d.day2 = "0"+d.day2
-    }
+  Meteor.publish("summary", function(date1,date2){
+    console.log(date1)
     return Sleep.find({sleep: {
-        $gte: new Date(d.year + "-" + d.month + "-" + d.day + "T07:00:00.000Z"),
-        $lt: new Date(d.year + "-" + d.month + "-" + d.day2 + "T07:00:00.000Z"),    
+        $gte: date1,
+        $lt: date2,    
       }})
   })
 
@@ -183,4 +165,30 @@ if (Meteor.isServer) {
        Sleep.update({woke:null}, {$set: {woke: new Date()}})
     }
   });
+
+  Meteor.startup(function(){
+
+    if(!Sleep.findOne()){
+      var oldData = [
+        {sleep: new Date('Sat Sep 13 2014 06:51:37 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 07:25:05 GMT-0700 (PDT)')},
+        {sleep: new Date('Sat Sep 13 2014 07:26:45 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 07:31:55 GMT-0700 (PDT)')},
+        {sleep: new Date('Sat Sep 13 2014 07:31:56 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 07:31:57 GMT-0700 (PDT)')},
+        {sleep: new Date('Sat Sep 13 2014 10:06:13 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 11:19:30 GMT-0700 (PDT)')},
+        {sleep: new Date('Thu Sep 11 2014 21:14:20 GMT-0700 (PDT)'), woke: new Date('Thu Sep 11 2014 21:42:05 GMT-0700 (PDT)')},
+        {sleep: new Date('Thu Sep 11 2014 21:47:35 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 03:03:52 GMT-0700 (PDT)')},
+        {sleep: new Date('Fri Sep 12 2014 04:22:16 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 05:44:57 GMT-0700 (PDT)')},
+        {sleep: new Date('Fri Sep 12 2014 05:55:31 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 05:55:44 GMT-0700 (PDT)')},
+        {sleep: new Date('Fri Sep 12 2014 08:12:54 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 08:44:12 GMT-0700 (PDT)')},
+        {sleep: new Date('Fri Sep 12 2014 08:44:22 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 08:44:25 GMT-0700 (PDT)')},
+        {sleep: new Date('Fri Sep 12 2014 11:28:25 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 12:44:15 GMT-0700 (PDT)')},
+        {sleep: new Date('Fri Sep 12 2014 15:49:01 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 16:25:06 GMT-0700 (PDT)')},
+        {sleep: new Date('Fri Sep 12 2014 19:52:03 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 22:45:03 GMT-0700 (PDT)')},
+        {sleep: new Date('Fri Sep 12 2014 22:54:32 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 04:29:10 GMT-0700 (PDT)')} 
+      ]
+      
+      _.each(oldData, function(d){
+        Sleep.insert(d)
+      })    
+    }
+  })
 }

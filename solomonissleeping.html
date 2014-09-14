@@ -11,11 +11,25 @@
 <body>
 </body>
 
-<template name="header">
+<template name="trackheader">
+<div class='head'>
+	<div class='menu'>
+		<a href='{{pathFor 'summary'}}'><i class='ion-stats-bars'></i></a>
+	</div>
+</div>
+</template>
+
+<template name="summaryheader">
+<div class='head'>
+	<div class='menu'>
+		<a href='{{pathFor 'track'}}'><i class='ion-home'></i></a>
+	</div>
+</div>
 </template>
 
 <template name="track">
   <div class='main {{state}}'>
+  	{{> trackheader}}
   	<div class='content'>
   		<div class='message'>
 	  		Solomon is {{#if asleep}}sleeping{{else}}awake{{/if}}, 
@@ -30,27 +44,54 @@
 
 <template name="summary">
 	<div class='summary'>
+		{{> summaryheader}}
 		<div class='date'>
 			<div class='data'>
-				{{summary.date}}
+				{{#with previousDay}}
+				<a style='float:left' href="{{pathFor 'summary'}}"><i class='ion-arrow-left-b'></i></a>
+				{{/with}}
+				{{#with nextDay}}
+				<a style='float:right' href="{{pathFor 'summary'}}"><i class='ion-arrow-right-b'></i></a>
+				{{/with}}
+				<span class='date-text'>{{summary.date}}</span>
+				
+				<br/>
 			</div>
 		</div>
 		<div class='naps'>
 			<div class='data'>
-				Solomon napped {{summary.napCount}} times for a total of {{summary.napTotal}}.
+				{{#if summary.napCount}}
+				Solomon napped {{summary.napCount}} times for a total of {{summary.napTotal}} on this day.
+				{{else}}
+				Solomon has no recorded naps on this day.
+				{{/if}}
 				<ul>
 				{{#each summary.naps}}
-					<li>Starting at {{start}} for {{duration}}</li>
+					<li>{{start}} for {{duration}}</li>
 				{{/each}}
 				</ul>
 			</div>
 		</div>
 		<div class='sleep'>
 			<div class='data'>
-				Solomon slept {{summary.sleepCount}} times for a total of {{summary.sleepTotal}}.
+				{{#if summary.sleepCount}}
+				Solomon slept {{summary.sleepCount}} times for a total of {{summary.sleepTotal}} on this night.
+				{{else}}
+				Solomon has no recorded sleep on this night.
+				{{/if}}
 				<ul>
 				{{#each summary.sleeps}}
 					<li>{{start}} for {{duration}}</li>
+				{{/each}}
+				</ul>
+			</div>
+		</div>
+		<div class='raw'>
+			<div class='data'>
+				All Sleep Events
+				<ul>
+				{{#each summary.raw}}
+					<li sleep-id="{{id}}">{{start}} for {{duration}}</li>
 				{{/each}}
 				</ul>
 			</div>
@@ -59,5 +100,9 @@
 </template>
 
 <template name="loading">
-	<img src="loading.gif">
+<div class='loading'>
+	<img src="/loading.gif" />
+	<br />
+	<em>Is Solomon Sleeping?</em>
+</div>
 </template>
