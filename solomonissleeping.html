@@ -91,7 +91,11 @@
 				All Sleep Events
 				<ul>
 				{{#each summary.raw}}
-					<li sleep-id="{{id}}">{{start}} for {{duration}}</li>
+					{{#if discard}}
+					<li><s>{{start}} for {{duration}}</s> <a rel="include" href="#">Include</a></li>
+					{{else}}
+					<li>{{start}} for {{duration}} <a rel="discard" href="#">Discard</a></li>
+					{{/if}}
 				{{/each}}
 				</ul>
 			</div>

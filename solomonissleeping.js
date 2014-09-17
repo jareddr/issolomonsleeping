@@ -50,13 +50,18 @@ if (Meteor.isClient) {
         
         var sleepData = {start: hours + ":" + minutes + "" + ampm, duration: timeDiff(sleep.sleep, sleep.woke)}
 
-        raw.push({id: sleep._id, start: moment(sleep.sleep).format('M/D h:mm:ss a'), duration: timeDiff(sleep.sleep, sleep.woke)})
+        raw.push({id: sleep._id, discard: sleep.discard, start: moment(sleep.sleep).format('M/D h:mm:ss a'), duration: timeDiff(sleep.sleep, sleep.woke)})
 
-        if(diff<1000*60*10){
+        //don't include discarded events
+        if(sleep.discard){
           return
         }
-        
+
         if(start.getHours() >= 7  && start.getHours() < 19){
+          //don't count naps shorter than 10m
+          if(diff<1000*60*10){
+            return
+          }
           napTimes.push(sleepData);
           napCount++
           napTotal += diff
@@ -139,6 +144,16 @@ if (Meteor.isClient) {
       Meteor.call("wake")
     }
   });
+
+  Template.summary.events({
+    'click [rel="discard"]': function () {
+      Meteor.call("discard", this.id)
+    },
+    'click [rel="include"]': function () {
+      Meteor.call("include", this.id)
+    }    
+  });
+
 }
 
 if (Meteor.isServer) {
@@ -157,12 +172,18 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     sleep: function () {
-      id = Sleep.insert({sleep: new Date(), woke: null})
+      id = Sleep.insert({sleep: new Date(), woke: null, discard: 0})
       console.log(id)
       return id;
     },
     wake: function () {
        Sleep.update({woke:null}, {$set: {woke: new Date()}})
+    },
+    discard: function(id){
+      Sleep.update({_id:id}, {$set: {discard: 1}})
+    },
+    include: function(id){
+      Sleep.update({_id:id}, {$set: {discard: 0}})
     }
   });
 
