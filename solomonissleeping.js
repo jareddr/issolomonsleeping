@@ -31,6 +31,23 @@ if (Meteor.isClient) {
     return Sleep.findOne({woke: null})
   }
 
+  Template.manual_entry.rendered = function () {
+    if(!this.rendered){
+      this.rendered = true;
+      $('#sleep-time').timepicker({
+                minuteStep: 5,
+                showInputs: false,
+                disableFocus: true
+            });
+      $('#wake-time').timepicker({
+                minuteStep: 5,
+                showInputs: false,
+                disableFocus: true
+            });
+    }
+
+  };
+
   Template.summary.summary = function () {
     var napTimes = []
     var sleepTimes = []
