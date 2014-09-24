@@ -23,7 +23,7 @@ if (Meteor.isClient) {
 				return Meteor.subscribe("sleep")
 			},
 			data: function(){
-				return {sleeps: Sleep.find({}, {sort: {sleep:1}}).fetch()}
+				return {sleeps: Sleep.find({discard:{$ne:1}}, {sort: {sleep:1}}).fetch()}
 			}
 		})
 		this.route('summary', { 
