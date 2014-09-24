@@ -40,11 +40,9 @@ if (Meteor.isClient) {
 		      day2 = "0"+day2
 		    }
 	
-      		var date1 = new Date(year + "-" + month + "-" + day + "T14:00:00.000Z")
-        	var date2 = new Date(year + "-" + month + "-" + day2 + "T14:00:00.000Z")    
-  			console.log(date1)
-  			console.log(date2)
-		  	return Meteor.subscribe("summary", date1,date2) 
+      		this.date1 = new Date(year + "-" + month + "-" + day + "T14:00:00.000Z")
+        	this.date2 = new Date(year + "-" + month + "-" + day2 + "T14:00:00.000Z")    
+		  	return Meteor.subscribe("summary", this.date1,this.date2) 
 		 },
 		  data: function() {
 
@@ -53,7 +51,7 @@ if (Meteor.isClient) {
 		  		nextDay: {year: date.add(1, "day").format("YYYY"), month: date.format("M"), day: date.format("D")} ,
 		  		previousDay: {year: date.add(-2, "day").format("YYYY"), month: date.format("M"), day: date.format("D")},
 		  		date:date.add(1, "day"),
-		  		sleeps: Sleep.find({}, {sort: {sleep:1}}) 
+		  		sleeps: Sleep.find({sleep: {$gte: this.date1, $lt: this.date2}}, {sort: {sleep:1}}) 
 		  	} 
 		  } 
 		});
