@@ -61,11 +61,9 @@ if (Meteor.isClient) {
         var start = new Date(sleep.sleep)
         var end = new Date(sleep.woke)
         var hours = start.getHours() % 12
-        var minutes = start.getMinutes()
-        var ampm = start.getHours() > 12 ? "pm" : "am"
         var diff = end - start;
         
-        var sleepData = {start: hours + ":" + minutes + "" + ampm, duration: timeDiff(sleep.sleep, sleep.woke)}
+        var sleepData = {start: moment(sleep.sleep).format("h:mm a"), duration: timeDiff(sleep.sleep, sleep.woke)}
 
         raw.push({id: sleep._id, discard: sleep.discard, start: moment(sleep.sleep).format('M/D h:mm:ss a'), duration: timeDiff(sleep.sleep, sleep.woke)})
 
@@ -171,6 +169,43 @@ if (Meteor.isClient) {
     }    
   });
 
+  function getDateTime(date, time_string){
+    var time = time_string.split(/[: ]/),
+        d1 = moment(date),
+        hours,
+        minutes
+      if(time.length == 3){
+        hours = parseInt(time[0])%12 + (time[2] == "AM" ? 0 : 12);
+        minutes = parseInt(time[1])
+      }
+
+      d1.hours(hours)
+      d1.minutes(minutes)
+      //if earlier than 7am it happened the night of the next day
+      if(hours < 7){
+        //add one day
+        d1.date(d1.date()+1)
+      }
+    
+      return new Date(d1)
+  }
+
+  Template.manual_entry.events({
+    'click [rel="add-event"]': function () {
+      var d1 = getDateTime(this.date, $('#sleep-time').val())
+      var d2 = getDateTime(this.date, $('#wake-time').val())
+
+      if(d2-d1 < 0){
+        alert('Wake time must come after sleep time.')
+        return
+      }
+
+      Meteor.call("addEvent", d1, d2)
+      // console.log(d1);
+      // console.log(d2);
+    }    
+  });
+
 }
 
 if (Meteor.isServer) {
@@ -190,11 +225,14 @@ if (Meteor.isServer) {
   Meteor.methods({
     sleep: function () {
       id = Sleep.insert({sleep: new Date(), woke: null, discard: 0})
-      console.log(id)
       return id;
-    },
+    },   
     wake: function () {
        Sleep.update({woke:null}, {$set: {woke: new Date()}})
+    },
+    addEvent: function (d1,d2) {
+      id = Sleep.insert({sleep: d1, woke: d2, discard: 0})
+      return id;
     },
     discard: function(id){
       Sleep.update({_id:id}, {$set: {discard: 1}})
