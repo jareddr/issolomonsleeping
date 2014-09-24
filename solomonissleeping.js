@@ -6,6 +6,12 @@ if (Meteor.isClient) {
     timer.changed()
   }
 
+Template.data.helpers({
+  dataDateFormat: function (date) {
+    return moment(date).format("YYYY-MM-DD HH:MM:SS")
+  }
+});
+
   function timeDiff(t1, t2){
       var hours, minutes, seconds
       var time = (new Date(t2) - new Date(t1)) / 1000,

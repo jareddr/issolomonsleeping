@@ -17,6 +17,15 @@ if (Meteor.isClient) {
 	Router.map(function() {
 	  	this.route('track', {path: '/', waitOn: function(){ return Meteor.subscribe("sleep")}})
 	  	this.route('loading', {path: '/loading', waitOn: function(){ return Meteor.subscribe("sleep")}})
+		this.route('data', {
+			path: '/data',
+			waitOn: function(){
+				return Meteor.subscribe("sleep")
+			},
+			data: function(){
+				return {sleeps: Sleep.find({}, {sort: {sleep:1}}).fetch()}
+			}
+		})
 		this.route('summary', { 
 		  path: '/summary/:year?/:month?/:day?',
 		  waitOn: function() { 
