@@ -8,7 +8,7 @@ if (Meteor.isClient) {
 
 Template.data.helpers({
   dataDateFormat: function (date) {
-    return moment(date).format("YYYY-MM-DD hh:mm:ss")
+    return moment(date).format("YYYY-MM-DD HH:mm:ss")
   }
 });
 
