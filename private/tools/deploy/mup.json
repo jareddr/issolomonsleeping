@@ -2,7 +2,7 @@
   // Server authentication info
   "servers": [
     {
-      "host": "lvlmrkt.com",
+      "host": "pentagram",
       "username": "root",
      // "password": "password"
       // or pem file (ssh based authentication)
