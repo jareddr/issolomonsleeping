@@ -220,6 +220,10 @@ if (Meteor.isServer) {
     return Sleep.find({})
   })
 
+  Meteor.publish("home", function(){
+    return Sleep.find({discard:{$ne:1}}, {sort: {sleep:-1}, limit: 1})
+  })
+
   Meteor.publish("summary", function(date1,date2){
     console.log(date1)
     return Sleep.find({sleep: {

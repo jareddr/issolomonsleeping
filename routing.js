@@ -15,7 +15,7 @@ if (Meteor.isClient) {
 	Router.onBeforeAction('loading')
 
 	Router.map(function() {
-	  	this.route('track', {path: '/', waitOn: function(){ return Meteor.subscribe("sleep")}})
+	  	this.route('track', {path: '/', waitOn: function(){ return Meteor.subscribe("home")}})
 	  	this.route('loading', {path: '/loading', waitOn: function(){ return Meteor.subscribe("sleep")}})
 		this.route('data', {
 			path: '/data',
