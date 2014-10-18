@@ -1,12 +1,10 @@
 @sleep: #435a6b;
 @wake: #3fa46a;
 
-html,body{
-	border:0px;
-	padding:0px;
-	margin:0px;
-	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-	color:white;
+#tophat{
+  font-size:2em;
+  text-align: right;
+	a{ border-color:#89867e; margin-right:5px; color: #89867e; padding:5px; padding-left:10px; padding-right:10px; margin-bottom:5px; margin-top:5px;}
 }
 
 a {
@@ -14,17 +12,24 @@ a {
 	border:1px solid white;
 	text-decoration: none;
 	padding:15px;
-	font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
-	font-weight: bold;
+	
 	&:hover{
 		color:white;
 		text-decoration: none;
 	}
+	display:inline-block;
 }
-
-div.main{
-	font-size:2em;
-	height:100vh;
+#sleep-state{
+	min-height:450px;
+	font-size:1.5em;
+	color:white;
+	line-height: 2.2em;
+	text-align: center;
+	padding-top:20px;
+	font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+	.container{
+		font-size:2em;
+	}
 	&.sleep{
 		background-color: @sleep;
 		a:hover{
@@ -38,50 +43,32 @@ div.main{
 			//background-color: @sleep;
 		}
 	}
-}
-
-div.head{
-	background-color: rgb(242,242,242);
-	color: #89867e;
-	text-align:right;
-	height:50px;
-	padding-top:10px;
-	font-size:0.8em;
-	a{ border-color:#89867e; margin-right:5px; color: #89867e; padding:5px; padding-left:10px; padding-right:10px;}
-}
-
-div.message{
-	padding-top:15px;
-}
-
-div.summary{
-	font-size:2em;
-	height:100vh;
-	background-color:@sleep;
-	ul{
-		list-style: none;
-		text-indent: 0;
-		padding:0;
-		font-size: 0.6em;
-		text-align: left;
-		padding-left:40px;
-		a{
-			border:none;
-			padding:5px;
+	div.action{
+		a{ 
+			font-size: 0.5em;
+			font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+			font-weight: bold;
+			padding-top:5px;
+			padding-bottom:5px;
 		}
-		margin-bottom: 5px;
+		margin-top:50px;	
 	}
+	
 }
-div.date{
+
+#summary-date{
 	background-color:#0e83cd;
 	text-transform: uppercase;
-	font-size: 0.65em;
-	height:40px;
-	padding-top:10px;
+	font-size: 0.7em;
+	font-weight: bold;
 	a{
 		border:none;
 		display:inline-block;
 		margin-top:-12px;
+		color:white;
+		&:visited,&:active{
+			color:white;
+		}
 	}
 	span{
 		display:block;
@@ -89,31 +76,52 @@ div.date{
 	.data{
 		padding:0px;
 	}
-}
-div.data{
-	width:400px;
-	margin:auto;
-	text-align: left;	
-	padding:20px;
-
-}
-
-div.naps{
-	background-color: @wake;
-	min-height:50px;
+	color:white;
+	font-size:1em;
+	text-align: center;
+	div.date-text{	
+		padding-top: 5px;
+	}
+	
 }
 
-div.sleep{
-	background-color: @sleep;
-	min-height:50px;
+.columns.summary, .column.summary{
+	padding-top:10px;
+	padding-bottom:10px;
+	ul{
+
+		list-style-type: square;
+		text-indent: 0;
+		padding:0;
+		font-size: 0.6em;
+		text-align: left;
+		padding-left:20px;
+		a{
+			border:none;
+			padding:5px;
+		}
+		margin-bottom: 5px;
+		margin-top: 20px;
+	}
+	color:white;
+	font-size:2em;
+	line-height: 1.1em;
 }
 
-div.raw{
-	background-color: #cd4436;
+#summary-day{
+	background-color:@wake;
+}
+
+#summary-night{
+	background-color:@sleep;
+}
+
+#summary-data{
+	background-color:#cd4436;
 	button{
 		color:black;
 		width:100%;
-		margin-top:20px;
+		margin-top:0px;
 	}
 }
 
@@ -123,22 +131,6 @@ div.export{
 	font-family: monospace;
 }
 
-div.message{
-	font-size:1.8em;
-	text-align: center;
-}
-
-div.action{
-	margin-top:100px;
-}
-
-div.content{
-	padding:0px;
-	width:400px;
-	margin:auto;
-	text-align: center;
-	//height: 100vh;
-}
 
 div.loading{
 	width:400px;
@@ -150,11 +142,12 @@ div.loading{
 }
 
 div.bootstrap-timepicker{
-	width:155px;
+	width:125px;
 	display:inline-block;
-	font-size:0.7em;
+	font-size:0.6em;
 	input {
-		width:155px;
+		display: inline;
+		width:120px;
 	}
 	margin-top:10px;
 }

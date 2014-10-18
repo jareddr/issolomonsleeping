@@ -1,6 +1,9 @@
 <head>
-  <title>Solomon</title>
-  <meta name="viewport" content="initial-scale=0.75, maximum-scale=0.75">
+	<meta charset="utf-8">
+	<title>Solomon</title>
+	<meta name="description" content="Tracking my babies sleep">
+	<meta name="author" content="Jared Rapp">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link rel="apple-touch-icon" href="icon.png">
 	<link rel="apple-touch-icon" sizes="76x76" href="icon-1.png">
 	<link rel="apple-touch-icon" sizes="120x120" href="icon-2.png">
@@ -12,34 +15,32 @@
 </body>
 
 <template name="trackheader">
-<div class='head'>
-	<div class='menu'>
-		<a href='{{pathFor 'summary'}}'><i class='ion-stats-bars'></i></a>
-	</div>
+<div class="super-container full-width" id="tophat">
+	<a href='{{pathFor 'summary'}}'><i class='ion-stats-bars'></i></a>
 </div>
 </template>
 
 <template name="summaryheader">
-<div class='head'>
-	<div class='menu'>
-		<a href='{{pathFor 'track'}}'><i class='ion-home'></i></a>
-	</div>
+<div class="super-container full-width" id="tophat">
+	<a href='{{pathFor 'track'}}'><i class='ion-home'></i></a>
 </div>
 </template>
 
 <template name="track">
-  <div class='main {{state}}'>
   	{{> trackheader}}
-  	<div class='content'>
-  		<div class='message'>
-	  		Solomon is {{#if asleep}}sleeping{{else}}awake{{/if}}, 
+<div class="super-container full-width {{state}}" id="sleep-state">
+  <div class="container">
+    <div class="twelve columns offset-by-four alpha omega"> 
+		Solomon is {{#if asleep}}sleeping{{else}}awake{{/if}}, 
 	  		and has been for {{time}}.
-	  	</div>
-  		<div class='action'>
-  			<a rel="{{state}}" href="#">He just {{#if asleep}}woke up{{else}}fell asleep{{/if}}.</a>
-  		</div>
-  	</div>
+    </div>
   </div>
+  <div class="container">
+    <div class="twelve columns offset-by-four alpha omega action">
+  		<a rel="{{state}}" href="#">He just {{#if asleep}}woke up{{else}}fell asleep{{/if}}.</a>
+    </div>
+  </div>  	
+</div>
 </template>
 
 <template name="data">
@@ -51,23 +52,23 @@
 </template>
 
 <template name="summary">
-	<div class='summary'>
-		{{> summaryheader}}
-		<div class='date'>
-			<div class='data'>
-				{{#with previousDay}}
+	{{> summaryheader}}
+	<div class="super-container full-width" id="summary-date">
+	  <div class="container">
+	    <div class="twelve columns alpha omega offset-by-four">
+	    	{{#with previousDay}}
 				<a style='float:left' href="{{pathFor 'summary'}}"><i class='ion-arrow-left-b'></i></a>
-				{{/with}}
-				{{#with nextDay}}
+			{{/with}}
+			{{#with nextDay}}
 				<a style='float:right' href="{{pathFor 'summary'}}"><i class='ion-arrow-right-b'></i></a>
-				{{/with}}
-				<span class='date-text'>{{summary.date}}</span>
-				
-				<br/>
-			</div>
-		</div>
-		<div class='naps'>
-			<div class='data'>
+			{{/with}}
+	    	<div class='date-text'>{{summary.date}}</div>
+	    </div>
+	  </div>
+	</div>
+	<div class="super-container full-width" id="summary-day">
+	  <div class="container">
+	    <div class="twelve columns alpha omega offset-by-four summary">
 				{{#if summary.napCount}}
 				Solomon napped {{summary.napCount}} times for a total of {{summary.napTotal}} on this day.
 				{{else}}
@@ -78,10 +79,12 @@
 					<li>{{start}} for {{duration}}</li>
 				{{/each}}
 				</ul>
-			</div>
-		</div>
-		<div class='sleep'>
-			<div class='data'>
+	    </div>
+	  </div>
+	</div>
+	<div class="super-container full-width" id="summary-night">
+	  <div class="container">
+	    <div class="twelve columns alpha omega offset-by-four summary">
 				{{#if summary.sleepCount}}
 				Solomon slept {{summary.sleepCount}} times for a total of {{summary.sleepTotal}} on this night.
 				{{else}}
@@ -92,10 +95,12 @@
 					<li>{{start}} for {{duration}}</li>
 				{{/each}}
 				</ul>
-			</div>
-		</div>
-		<div class='raw'>
-			<div class='data'>
+	    </div>
+	  </div>
+	</div>
+	<div class="super-container full-width" id="summary-data">
+	  <div class="container">
+	    <div class="twelve columns alpha omega offset-by-four summary">
 				All Sleep Events
 				<ul>
 				{{#each summary.raw}}
@@ -107,9 +112,9 @@
 				{{/each}}
 				</ul>
 				{{> manual_entry}}
-			</div>
-		</div>
-	</div>
+	    </div>
+	  </div>
+	</div>	
 </template>
 
 <template name="manual_entry">
