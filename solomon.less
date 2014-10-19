@@ -1,9 +1,14 @@
 @sleep: #435a6b;
 @wake: #3fa46a;
 
+html,body{
+	background-color:#333;
+}
+
 #tophat{
   font-size:2em;
   text-align: right;
+  background-color:#eee;
 	a{ border-color:#89867e; margin-right:5px; color: #89867e; padding:5px; padding-left:10px; padding-right:10px; margin-bottom:5px; margin-top:5px;}
 }
 
@@ -59,7 +64,10 @@ a {
 #summary-date{
 	background-color:#0e83cd;
 	text-transform: uppercase;
-	font-size: 0.7em;
+	font-size: 1.2em;
+	@media only screen and (max-width: 767px) {
+		font-size:1em;
+	}
 	font-weight: bold;
 	a{
 		border:none;
@@ -70,14 +78,7 @@ a {
 			color:white;
 		}
 	}
-	span{
-		display:block;
-	}
-	.data{
-		padding:0px;
-	}
 	color:white;
-	font-size:1em;
 	text-align: center;
 	div.date-text{	
 		padding-top: 5px;
@@ -123,6 +124,7 @@ a {
 		width:100%;
 		margin-top:0px;
 	}
+	padding-bottom:100px;
 }
 
 div.export{
