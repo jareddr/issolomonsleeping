@@ -134,13 +134,17 @@ div.export{
 }
 
 
+#loading-container{
+	height:500px;
+	margin-top:100px;
+}
 div.loading{
-	width:400px;
-	text-align: center;
 	font-size: 2em;
 	margin:auto;
 	color:black;
 	margin-top:100px;
+	color:white;
+	text-align: center;
 }
 
 div.bootstrap-timepicker{
@@ -157,4 +161,61 @@ div.bootstrap-timepicker{
 
 input, div.bootstrap-timepicker{
 	color:black;
+}
+
+.loader {
+    width: 64px;
+    height: 64px;
+    position: relative;
+	transform-style: preserve-3d;
+    margin: 0 auto;
+    text-align: left;
+    margin-bottom:20px;
+}
+@-webkit-keyframes loader21 {
+	0% { transform: translate(0px, 0px) rotateZ(0deg); }
+	30% { transform: translate(-10px, -10px) rotateZ(0deg); }
+    70% { transform: translate(-10px, -10px) rotateZ(180deg); }
+    100% { transform: translate(0px, 0px) rotateZ(180deg); }
+}
+@-webkit-keyframes loader22 {
+	0% { transform: translate(0px, 0px) rotateZ(0deg); }
+	30% { transform: translate(10px, -10px) rotateZ(0deg); }
+    70% { transform: translate(10px, -10px) rotateZ(180deg); }
+    100% { transform: translate(0px, 0px) rotateZ(180deg); }
+}
+@-webkit-keyframes loader23 {
+	0% { transform: translate(0px, 0px) rotateZ(0deg); }
+	30% { transform: translate(10px, 10px) rotateZ(0deg); }
+    70% { transform: translate(10px, 10px) rotateZ(180deg); }
+    100% { transform: translate(0px, 0px) rotateZ(180deg); }
+}
+@-webkit-keyframes loader24 {
+	0% { transform: translate(0px, 0px) rotateZ(0deg); }
+	30% { transform: translate(-10px, 10px) rotateZ(0deg); }
+    70% { transform: translate(-10px, 10px) rotateZ(180deg); }
+    100% { transform: translate(0px, 0px) rotateZ(180deg); }
+}
+.loader-2 {
+    -webkit-transform: rotateZ(45deg);
+}
+.loader-2 i {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: #00aacf;
+    -webkit-animation: loader21 1000ms infinite ease-in-out;
+}
+.loader-2 i + i {
+    left: 32px;
+    -webkit-animation-name: loader22;
+}
+.loader-2 i + i + i {
+    top: 32px;
+    -webkit-animation-name: loader23;
+}
+.loader-2 i + i + i + i {
+    top: 32px;
+    left: 0;
+    -webkit-animation-name: loader24;
 }
