@@ -231,50 +231,24 @@ if (Meteor.isServer) {
         $lt: date2,    
       }})
   })
-
-  Meteor.methods({
-    sleep: function () {
-      id = Sleep.insert({sleep: new Date(), woke: null, discard: 0})
-      return id;
-    },   
-    wake: function () {
-       Sleep.update({woke:null}, {$set: {woke: new Date()}})
-    },
-    addEvent: function (d1,d2) {
-      id = Sleep.insert({sleep: d1, woke: d2, discard: 0})
-      return id;
-    },
-    discard: function(id){
-      Sleep.update({_id:id}, {$set: {discard: 1}})
-    },
-    include: function(id){
-      Sleep.update({_id:id}, {$set: {discard: 0}})
-    }
-  });
-
-  Meteor.startup(function(){
-
-    if(!Sleep.findOne()){
-      var oldData = [
-        {sleep: new Date('Sat Sep 13 2014 06:51:37 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 07:25:05 GMT-0700 (PDT)')},
-        {sleep: new Date('Sat Sep 13 2014 07:26:45 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 07:31:55 GMT-0700 (PDT)')},
-        {sleep: new Date('Sat Sep 13 2014 07:31:56 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 07:31:57 GMT-0700 (PDT)')},
-        {sleep: new Date('Sat Sep 13 2014 10:06:13 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 11:19:30 GMT-0700 (PDT)')},
-        {sleep: new Date('Thu Sep 11 2014 21:14:20 GMT-0700 (PDT)'), woke: new Date('Thu Sep 11 2014 21:42:05 GMT-0700 (PDT)')},
-        {sleep: new Date('Thu Sep 11 2014 21:47:35 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 03:03:52 GMT-0700 (PDT)')},
-        {sleep: new Date('Fri Sep 12 2014 04:22:16 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 05:44:57 GMT-0700 (PDT)')},
-        {sleep: new Date('Fri Sep 12 2014 05:55:31 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 05:55:44 GMT-0700 (PDT)')},
-        {sleep: new Date('Fri Sep 12 2014 08:12:54 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 08:44:12 GMT-0700 (PDT)')},
-        {sleep: new Date('Fri Sep 12 2014 08:44:22 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 08:44:25 GMT-0700 (PDT)')},
-        {sleep: new Date('Fri Sep 12 2014 11:28:25 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 12:44:15 GMT-0700 (PDT)')},
-        {sleep: new Date('Fri Sep 12 2014 15:49:01 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 16:25:06 GMT-0700 (PDT)')},
-        {sleep: new Date('Fri Sep 12 2014 19:52:03 GMT-0700 (PDT)'), woke: new Date('Fri Sep 12 2014 22:45:03 GMT-0700 (PDT)')},
-        {sleep: new Date('Fri Sep 12 2014 22:54:32 GMT-0700 (PDT)'), woke: new Date('Sat Sep 13 2014 04:29:10 GMT-0700 (PDT)')} 
-      ]
-      
-      _.each(oldData, function(d){
-        Sleep.insert(d)
-      })    
-    }
-  })
 }
+
+Meteor.methods({
+  sleep: function () {
+    id = Sleep.insert({sleep: new Date(), woke: null, discard: 0})
+    return id;
+  },   
+  wake: function () {
+     Sleep.update({woke:null}, {$set: {woke: new Date()}})
+  },
+  addEvent: function (d1,d2) {
+    id = Sleep.insert({sleep: d1, woke: d2, discard: 0})
+    return id;
+  },
+  discard: function(id){
+    Sleep.update({_id:id}, {$set: {discard: 1}})
+  },
+  include: function(id){
+    Sleep.update({_id:id}, {$set: {discard: 0}})
+  }
+});
