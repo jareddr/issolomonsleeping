@@ -2,7 +2,7 @@
   // Server authentication info
   "servers": [
     {
-      "host": "pentagram",
+      "host": "hivedj.com",
       "username": "root",
      // "password": "password"
       // or pem file (ssh based authentication)
